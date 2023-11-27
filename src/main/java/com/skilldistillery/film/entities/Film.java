@@ -12,9 +12,9 @@ public class Film {
 	private String langName;
 	private String rating;
 	private List<Actor> actors;
-	private String categories;
+	private String category;
 
-	public Film(String title, String desc, short releaseYear, int langId, String rating, String langName, List<Actor> actors, String categories) {
+	public Film(String title, String desc, short releaseYear, int langId, String rating, String langName, List<Actor> actors, String category) {
 		this.title = title;
 		this.description = desc;
 		this.releaseYear = releaseYear;
@@ -22,7 +22,7 @@ public class Film {
 		this.langName = langName;
 		this.rating = rating;
 		this.actors = actors;
-		this.categories = categories;
+		this.category = category;
 	}
 
 	public Film() {
@@ -82,7 +82,7 @@ public class Film {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(actors, categories, description, filmId, langName, languageId, rating, releaseYear, title);
+		return Objects.hash(actors, category, description, filmId, langName, languageId, rating, releaseYear, title);
 	}
 
 	public List<Actor> getActors() {
@@ -97,7 +97,7 @@ public class Film {
 	public String toString() {
 		return "Film [filmId=" + filmId + ", title=" + title + ", description=" + description + ", releaseYear="
 				+ releaseYear + ", languageId=" + languageId + ", langName=" + langName + ", rating=" + rating
-				+ ", actors=" + actors + ", categories=" + categories + "]";
+				+ ", actors=" + actors + ", category=" + category + "]";
 	}
 
 
@@ -110,7 +110,7 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
-		return Objects.equals(actors, other.actors) && Objects.equals(categories, other.categories)
+		return Objects.equals(actors, other.actors) && Objects.equals(category, other.category)
 				&& Objects.equals(description, other.description) && filmId == other.filmId
 				&& Objects.equals(langName, other.langName) && languageId == other.languageId
 				&& Objects.equals(rating, other.rating) && releaseYear == other.releaseYear
@@ -125,11 +125,13 @@ public class Film {
 		this.langName = langName;
 	}
 
-	public String getCategories() {
-		return categories;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCategories(String categories) {
-		this.categories = categories;
+	public void setCategory(String category) {
+		this.category = category;
 	}
+
+
 }

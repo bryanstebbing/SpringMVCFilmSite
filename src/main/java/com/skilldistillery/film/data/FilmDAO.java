@@ -6,6 +6,6 @@ import com.skilldistillery.film.entities.Film;
 
 public interface FilmDAO {
 	public List<Film> findFilmById(int filmId);
-	public Film findFilmByKeyword(String keyword);
+	public List<Film> findFilmByKeyword(String keyword);
 
 }

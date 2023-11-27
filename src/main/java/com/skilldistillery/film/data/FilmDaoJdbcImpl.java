@@ -32,31 +32,34 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 
 			String sql = "SELECT film.id AS film_id, film.title, film.description, film.release_year, film.rating, "
 					+ "GROUP_CONCAT(CONCAT(actor.first_name, ' ', actor.last_name) SEPARATOR ', ') AS actors, "
-					+ "language.id AS language_id, language.name AS language_name " + "FROM film "
-					+ "LEFT JOIN film_actor ON film.id = film_actor.film_id "
-					+ "LEFT JOIN actor ON film_actor.actor_id = actor.id "
-					+ "LEFT JOIN language ON film.language_id = language.id "
+					+ "language.id AS language_id, language.name AS language_name, film_category " + "FROM film "
+					+ "JOIN film_actor ON film.id = film_actor.film_id "
+					+ "JOIN film_category ON film_category.film_id = film.id "
+					+ "JOIN actor ON film_actor.actor_id = actor.id "
+					+ "JOIN language ON film.language_id = language.id "
 					+ "WHERE film.id = ? "
 					+ "GROUP BY film.id, film.title, film.description, film.release_year, film.rating, language.id, language.name";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "%" + filmId + "%");
+			stmt.setInt(1, filmId);
 
 			ResultSet filmResult = stmt.executeQuery();
 
 			if (!filmResult.next()) {
-				System.out.println("We're sorry (sort of), but the film you are looking for does not exist."
-						+ " Please try again.");
+			    System.out.println("We're sorry (sort of), but the film you are looking for does not exist. Please try again.");
 			} else {
-				StringBuilder actors = new StringBuilder();
+			    do {
+                    Film film = new Film();
+                    film.setTitle(filmResult.getString("title"));
+                    film.setDescription(filmResult.getString("description"));
+                    film.setReleaseYear(filmResult.getShort("release_year"));
+                    film.setRating(filmResult.getString("rating"));
+                    film.setLanguageId(filmResult.getInt("language_id"));
+                    film.setLangName(filmResult.getString("language_name"));
+                    film.setCategory(filmResult.getString("category"));
 
-				do {
-					actors.append(filmResult.getString("actors")).append(", ");
-					System.out.println("Title: " + filmResult.getString("title") + "\nDescription: "
-							+ filmResult.getString("description") + "\nRating: " + filmResult.getString("rating")
-							+ "\nRelease Year: " + filmResult.getShort("release_year") + "\nLanguage: "
-							+ filmResult.getString("language_name") + "\nActors: " + actors.toString() + "\n");
-				} while (filmResult.next());
+                    films.add(film);
+			    } while (filmResult.next());
 
 				conn.close();
 			}
@@ -66,8 +69,8 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 		return films;
 	}
 
-	public Film findFilmByKeyword(String keyword) {
-		Film filmSetNumber2 = null;
+	public List<Film> findFilmByKeyword(String keyword) {
+		List<Film> filmSetNumber2 = new ArrayList<>();
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PWD);
@@ -98,10 +101,6 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 
 				do {
 					actors.append(filmResult.getString("actors")).append(", ");
-					System.out.println("Title: " + filmResult.getString("title") + "\nDescription: "
-							+ filmResult.getString("description") + "\nRating: " + filmResult.getString("rating")
-							+ "\nRelease Year: " + filmResult.getShort("release_year") + "\nLanguage: "
-							+ filmResult.getString("language_name") + "\nActors: " + actors.toString() + "\n");
 				} while (filmResult.next());
 
 			}

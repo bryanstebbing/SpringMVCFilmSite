@@ -10,16 +10,15 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${! empty Film}">
+		<c:when test="${! empty film}">
 			<ul>
-				<li>${film.title}</li>
-				<li>${film.description}</li>
-				<li>${film.rating}</li>
-				<li>${film.release_year}</li>
-				<li>${film.language_name}</li>
-				<li>${film.actors}</li>
-				<li>${film.category}</li>
-				<li>test</li>
+				<li>Title: ${film.title}</li>
+				<li>Description: ${film.description}</li>
+				<li>Rating: ${film.rating}</li>
+				<li>Release Year: ${film.release_year}</li>
+				<li>Language: ${film.language_name}</li>
+				<li>Actors: ${film.actors}</li>
+				<li>Category: ${film.category}</li>
 			</ul>
 		</c:when>
 		<c:otherwise>

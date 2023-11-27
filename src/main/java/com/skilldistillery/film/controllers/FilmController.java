@@ -22,10 +22,10 @@ public class FilmController {
 		this.filmDAO = filmDAO;
 	}
 	
-	@RequestMapping(path = {"home.do", "/"})
-	public String goToHome() {
-		return "/WEB-INF/home.jsp";
-	}
+//	@RequestMapping(path = {"home.do", "/"})
+//	public String goToHome() {
+//		return "/WEB-INF/home.jsp";
+//	}
 
 	@RequestMapping(path = "GetFilmByID.do", params = "filmId", method = RequestMethod.GET)
 	public ModelAndView findFilmById(@RequestParam("filmId") int filmId) {
@@ -39,7 +39,7 @@ public class FilmController {
 	@RequestMapping(path = "GetFilmByKeyword.do", params = "keyword", method = RequestMethod.GET)
 	public ModelAndView findFilmByKeyword(@RequestParam("keyword") String keyword) {
 		ModelAndView modelAndView = new ModelAndView();
-		Film film = filmDAO.findFilmByKeyword(keyword);
+		List<Film> film = filmDAO.findFilmByKeyword(keyword);
 		modelAndView.addObject("film", film);
 		modelAndView.setViewName("WEB-INF/result.jsp");
 		return modelAndView;
