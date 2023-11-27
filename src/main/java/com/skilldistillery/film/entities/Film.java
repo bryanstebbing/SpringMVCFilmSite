@@ -12,8 +12,9 @@ public class Film {
 	private String langName;
 	private String rating;
 	private List<Actor> actors;
+	private String categories;
 
-	public Film(String title, String desc, short releaseYear, int langId, String rating, String langName, List<Actor> actors) {
+	public Film(String title, String desc, short releaseYear, int langId, String rating, String langName, List<Actor> actors, String categories) {
 		this.title = title;
 		this.description = desc;
 		this.releaseYear = releaseYear;
@@ -21,6 +22,7 @@ public class Film {
 		this.langName = langName;
 		this.rating = rating;
 		this.actors = actors;
+		this.categories = categories;
 	}
 
 	public Film() {
@@ -80,23 +82,24 @@ public class Film {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(actors, description, filmId, langName, languageId, rating, releaseYear, title);
-	}
-
-	@Override
-	public String toString() {
-		return "Film [filmId=" + filmId + ", title=" + title + ", description=" + description + ", releaseYear="
-				+ releaseYear + ", languageId=" + languageId + ", langName=" + langName + ", rating=" + rating
-				+ ", actors=" + actors + "]";
+		return Objects.hash(actors, categories, description, filmId, langName, languageId, rating, releaseYear, title);
 	}
 
 	public List<Actor> getActors() {
 		return actors;
 	}
-
+	
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
+	
+	@Override
+	public String toString() {
+		return "Film [filmId=" + filmId + ", title=" + title + ", description=" + description + ", releaseYear="
+				+ releaseYear + ", languageId=" + languageId + ", langName=" + langName + ", rating=" + rating
+				+ ", actors=" + actors + ", categories=" + categories + "]";
+	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -107,8 +110,9 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
-		return Objects.equals(actors, other.actors) && Objects.equals(description, other.description)
-				&& filmId == other.filmId && Objects.equals(langName, other.langName) && languageId == other.languageId
+		return Objects.equals(actors, other.actors) && Objects.equals(categories, other.categories)
+				&& Objects.equals(description, other.description) && filmId == other.filmId
+				&& Objects.equals(langName, other.langName) && languageId == other.languageId
 				&& Objects.equals(rating, other.rating) && releaseYear == other.releaseYear
 				&& Objects.equals(title, other.title);
 	}
@@ -119,5 +123,13 @@ public class Film {
 
 	public void setLangName(String langName) {
 		this.langName = langName;
+	}
+
+	public String getCategories() {
+		return categories;
+	}
+
+	public void setCategories(String categories) {
+		this.categories = categories;
 	}
 }
